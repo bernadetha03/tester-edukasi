@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Pembayaran{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 text-center">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-5">
+                    <h2 class="fw-bold">Pembayaran</h2>
+                    <p>{{ transaksi.book.judul }}</p>
+                    <h1 class="mb-3">Rp{{ transaksi.jumlah }}</h1>
+
+                    <div class="alert alert-warning">
+                        Status: {{ transaksi.get_status_display }}
+                    </div>
+
+                    <div class="fake-qr mx-auto my-4">
+                        <div>QRIS</div>
+                        <small>SIMULASI</small>
+                    </div>
+
+                    <p class="text-muted">
+                        Ini masih mode simulasi. Setelah payment gateway QRIS dipasang,
+                        QR pembayaran asli akan muncul di sini.
+                    </p>
+
+                    <form method="POST" action="{% url 'simulasi_pembayaran' transaksi.access_token %}">
+                        {% csrf_token %}
+                        <button class="btn btn-success btn-lg w-100">
+                            Simulasikan Pembayaran Berhasil
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

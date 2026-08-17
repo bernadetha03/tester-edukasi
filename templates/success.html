@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Pembayaran Berhasil{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="py-5">
+        <div class="display-3">✅</div>
+        <h1 class="fw-bold">Pembayaran Berhasil</h1>
+        <p class="lead">Buku <strong>{{ transaksi.book.judul }}</strong> sudah dapat dibaca.</p>
+        <a href="{% url 'baca_buku' transaksi.access_token %}" class="btn btn-warning btn-lg">
+            Baca Buku Sekarang
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Beranda - Edukasi Anak Papua{% endblock %}
+
+{% block content %}
+<section class="hero py-5">
+    <div class="container py-4">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <span class="badge text-bg-warning mb-3">Belajar • Budaya • Cerita</span>
+                <h1 class="display-5 fw-bold">Mengenal cerita rakyat melalui bacaan anak yang menyenangkan.</h1>
+                <p class="lead mt-3">Temukan buku cerita, budaya lokal, dan bahan bacaan edukatif untuk anak.</p>
+                <a href="{% url 'daftar_buku' %}" class="btn btn-warning btn-lg mt-2">Lihat Buku Cerita</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <h2 class="fw-bold mb-4">Buku Pilihan</h2>
+    <div class="row g-4">
+        {% for item in buku %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0">
+                {% if item.cover %}
+                    <img src="{{ item.cover.url }}" class="card-img-top book-cover" alt="{{ item.judul }}">
+                {% else %}
+                    <div class="placeholder-cover">Tidak ada cover</div>
+                {% endif %}
+                <div class="card-body">
+                    <div class="small text-muted">{{ item.asal_cerita }}</div>
+                    <h5 class="card-title mt-1">{{ item.judul }}</h5>
+                    <p class="card-text">{{ item.deskripsi|truncatechars:120 }}</p>
+                    {% if item.berbayar and item.harga > 0 %}
+                        <div class="fw-bold mb-3">Rp{{ item.harga }}</div>
+                    {% else %}
+                        <div class="fw-bold text-success mb-3">Gratis</div>
+                    {% endif %}
+                    <a href="{% url 'detail_buku' item.id %}" class="btn btn-dark">Lihat Buku</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <p>Belum ada buku. Tambahkan buku melalui halaman admin.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

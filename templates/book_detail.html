@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ buku.judul }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-5 align-items-start">
+        <div class="col-md-5">
+            {% if buku.cover %}
+                <img src="{{ buku.cover.url }}" class="img-fluid rounded shadow" alt="{{ buku.judul }}">
+            {% else %}
+                <div class="placeholder-cover rounded">Tidak ada cover</div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-7">
+            <div class="text-muted">{{ buku.asal_cerita }}</div>
+            <h1 class="fw-bold">{{ buku.judul }}</h1>
+            <p><strong>Usia:</strong> {{ buku.kategori_usia|default:"Semua usia" }}</p>
+            <p>{{ buku.deskripsi }}</p>
+
+            {% if buku.berbayar and buku.harga > 0 %}
+                <h3 class="fw-bold mb-4">Rp{{ buku.harga }}</h3>
+            {% else %}
+                <h3 class="text-success mb-4">Gratis</h3>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2">
+                {% if buku.preview %}
+                    <a href="{{ buku.preview.url }}" target="_blank" class="btn btn-outline-dark">Baca Preview</a>
+                {% endif %}
+                <a href="{% url 'checkout' buku.id %}" class="btn btn-warning">
+                    {% if buku.berbayar and buku.harga > 0 %}Beli & Baca{% else %}Baca Sekarang{% endif %}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

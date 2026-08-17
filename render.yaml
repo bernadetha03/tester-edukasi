@@ -1,0 +1,22 @@
+databases:
+  - name: edukasi-anak-db
+    plan: free
+    databaseName: edukasi_anak
+    user: edukasi_anak
+
+services:
+  - type: web
+    name: edukasi-anak
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn edukasi_anak.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: edukasi-anak-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"

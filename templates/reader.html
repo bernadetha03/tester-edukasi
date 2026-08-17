@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Baca {{ buku.judul }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="container mb-3">
+        <h2 class="fw-bold">{{ buku.judul }}</h2>
+        <p class="text-muted">Akses buku berhasil.</p>
+    </div>
+
+    {% if file_tidak_ada %}
+        <div class="container">
+            <div class="alert alert-warning">
+                File buku belum diunggah oleh admin.
+            </div>
+        </div>
+    {% else %}
+        <div class="reader-wrap">
+            <iframe src="{{ buku.file_buku.url }}" title="{{ buku.judul }}"></iframe>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
